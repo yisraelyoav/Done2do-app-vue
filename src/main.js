@@ -1,6 +1,11 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
 
-import './assets/main.css'
+import TodoItem from "./components/TodoItem.vue";
+import NewTodoModal from "./components/NewTodoModal.vue";
+const app = createApp(App);
 
-createApp(App).mount('#app')
+app.component("todo-item", TodoItem);
+app.component("new-todo-modal", NewTodoModal);
+
+app.mount("#app");
