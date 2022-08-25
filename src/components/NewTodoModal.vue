@@ -28,10 +28,10 @@
     <div>
       <label for="TodoRepetition">חזרה</label>
       <select name="repetition" id="TodoRepetition" v-model="enterdRepetition">
-        <option value="Daily">יומית</option>
-        <option value="Weekly">שבועית</option>
-        <option value="Monthly">חודשית</option>
-        <option value="Yearly">שנתית</option>
+        <option value="חזרה יומית">יומית</option>
+        <option value="חזרה שבועית">שבועית</option>
+        <option value="חזרה חודשית">חודשית</option>
+        <option value="חזרה שנתית">שנתית</option>
       </select>
     </div>
     <div>
@@ -60,15 +60,14 @@ export default {
   emits: ["add-todo"],
   methods: {
     submitData() {
-      console.log("click");
-      this.$emit(
-        "add-todo",
-        this.enterdTitle,
-        this.enterdDescription,
-        this.enterdDeadline,
-        this.enterdRepetition,
-        this.enterdPriority
-      );
+      const newTodo = {
+        title: this.enterdTitle,
+        description: this.enterdDescription,
+        deadline: this.enterdDeadline,
+        repetition: this.enterdRepetition,
+        priority: this.enterdPriority,
+      };
+      this.$emit("add-todo", newTodo);
     },
   },
 };

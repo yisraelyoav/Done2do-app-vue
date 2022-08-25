@@ -12,6 +12,7 @@
     :priority="todo.priority"
     :is-done="false"
     @toggle-isDone="toggleIsDoneStatus"
+    @delete="deleteTodo"
   />
 </template>
 
@@ -25,7 +26,7 @@ export default {
           title: "Build an awesome 2Do app",
           description: "dazzeling app that will get you a job",
           deadline: new Date().toLocaleDateString(),
-          repetition: "1yr",
+          repetition: "חזרה שבועית",
           priority: "High",
           isDone: false,
         },
@@ -34,7 +35,7 @@ export default {
           title: "Get a job",
           description: "finally get an amazing job",
           deadline: new Date().toLocaleDateString(),
-          repetition: "1yr",
+          repetition: "חזרה שנתית",
           priority: "High",
           isDone: false,
         },
@@ -47,17 +48,20 @@ export default {
       const clickedTodo = this.todos.find((todo) => todo.id === todoId);
       clickedTodo.isDone = !clickedTodo.isDone;
     },
-    addNewTodo(title, description, deadline, repetition, priority) {
+    addNewTodo(newTodoObj) {
       const newTodo = {
         id: new Date().toISOString(),
-        title: title,
-        description: description,
-        deadline: deadline,
-        repetition: repetition,
-        priority: priority,
+        title: newTodoObj.title,
+        description: newTodoObj.description,
+        deadline: newTodoObj.deadline,
+        repetition: newTodoObj.repetition,
+        priority: newTodoObj.priority,
         isDone: false,
       };
       this.todos.push(newTodo);
+    },
+    deleteTodo(todoId) {
+      this.todos = this.todos.filter((todo) => todo.id !== todoId);
     },
   },
 };

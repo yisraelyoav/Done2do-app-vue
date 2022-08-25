@@ -2,15 +2,19 @@
   <ul>
     <li>
       <div>{{ deadline }}</div>
+      <div v-if="detailsAreVisible">
+        <p>{{ repetition }}</p>
+      </div>
       <div>
         <h2 @click="toggleDetails">{{ title }}</h2>
         <div v-if="detailsAreVisible">
           <p>{{ description }}</p>
-          <p>{{ repetition }}</p>
         </div>
       </div>
-      <input type="checkbox" @change="toggleIsDone" />
-      <div class="priority"></div>
+      <div class="priority">
+        <input type="checkbox" @change="toggleIsDone" />
+        <button @click="$emit('delete', id)">Delete</button>
+      </div>
     </li>
   </ul>
 </template>
@@ -62,7 +66,7 @@ export default {
       detailsAreVisible: false,
     };
   },
-  emits: ["toggle-isDone"],
+  emits: ["toggle-isDone", "delete"],
   methods: {
     toggleDetails() {
       this.detailsAreVisible = !this.detailsAreVisible;
