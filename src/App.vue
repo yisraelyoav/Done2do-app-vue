@@ -101,14 +101,13 @@ header {
 
 #app li {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   direction: rtl;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   margin: 1rem auto;
   border-radius: 10px;
-  padding: 0.5rem;
   text-align: center;
-  width: 90%;
+  width: 95%;
   max-width: 40rem;
 }
 
@@ -172,5 +171,21 @@ header {
 }
 #app form div {
   margin: 1rem 0;
+}
+#app .priority {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#app .priority-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+#app .times {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
 }
 </style>

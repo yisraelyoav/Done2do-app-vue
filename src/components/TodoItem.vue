@@ -1,9 +1,11 @@
 <template>
   <ul>
     <li>
-      <div>{{ deadline }}</div>
-      <div v-if="detailsAreVisible">
-        <p>{{ repetition }}</p>
+      <div class="times">
+        <div>{{ deadline }}</div>
+        <div v-if="detailsAreVisible">
+          <p>{{ repetition }}</p>
+        </div>
       </div>
       <div>
         <h2 @click="toggleDetails">{{ title }}</h2>
@@ -13,7 +15,14 @@
       </div>
       <div class="priority">
         <input type="checkbox" @change="toggleIsDone" />
-        <button @click="$emit('delete', id)">Delete</button>
+        <div class="priority-buttons" v-if="detailsAreVisible">
+          <button @click="$emit('delete', id)">
+            <font-awesome-icon icon="fa-solid fa-trash" />
+          </button>
+          <button @click="$emit('edit', id)">
+            <font-awesome-icon icon="fa-solid fa-pencil" />
+          </button>
+        </div>
       </div>
     </li>
   </ul>
@@ -21,15 +30,6 @@
 
 <script>
 export default {
-  //   props: [
-  //     "id",
-  //     "title",
-  //     "description",
-  //     "deadline",
-  //     "repetition",
-  //     "priority",
-  //     "isDone",
-  //   ],
   props: {
     id: {
       type: String,

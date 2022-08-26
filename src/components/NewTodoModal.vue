@@ -28,6 +28,7 @@
     <div>
       <label for="TodoRepetition">חזרה</label>
       <select name="repetition" id="TodoRepetition" v-model="enterdRepetition">
+        <option value="">ללא</option>
         <option value="חזרה יומית">יומית</option>
         <option value="חזרה שבועית">שבועית</option>
         <option value="חזרה חודשית">חודשית</option>
