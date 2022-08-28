@@ -45,10 +45,21 @@
     </div>
     <button type="submit">צור משימה חדשה</button>
   </form>
+  <teleport to="body">
+    <error-alert v-if="inputIsValid">
+      <h2>קלט לא תקין</h2>
+      <p>אנא הזן: כותרת,דדליין ורמת דחיפות</p>
+      <button @click="closeError">הבנתי</button>
+    </error-alert>
+  </teleport>
 </template>
 
 <script>
+import ErrorAlert from "../UI/ErrorAlert.vue";
 export default {
+  components: {
+    ErrorAlert,
+  },
   data() {
     return {
       enterdTitle: "",
@@ -56,19 +67,37 @@ export default {
       enterdDeadline: "",
       enterdRepetition: "",
       enterdPriority: "",
+      inputIsValid: false,
     };
   },
   emits: ["add-todo"],
   methods: {
     submitData() {
-      const newTodo = {
-        title: this.enterdTitle,
-        description: this.enterdDescription,
-        deadline: this.enterdDeadline,
-        repetition: this.enterdRepetition,
-        priority: this.enterdPriority,
-      };
-      this.$emit("add-todo", newTodo);
+      if (
+        this.enterdTitle === "" ||
+        this.enterdPriority === "" ||
+        this.enterdDeadline === ""
+      ) {
+        this.inputIsValid = true;
+        return;
+      } else {
+        const newTodo = {
+          title: this.enterdTitle,
+          description: this.enterdDescription,
+          deadline: this.enterdDeadline,
+          repetition: this.enterdRepetition,
+          priority: this.enterdPriority,
+        };
+        this.$emit("add-todo", newTodo);
+        (this.enterdTitle = ""),
+          (this.enterdDescription = ""),
+          (this.enterdDeadline = ""),
+          (this.enterdRepetition = ""),
+          (this.enterdPriority = "");
+      }
+    },
+    closeError() {
+      this.inputIsValid = false;
     },
   },
 };

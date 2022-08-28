@@ -1,19 +1,21 @@
 <template>
   <h2 class="header">Done!</h2>
   <new-todo-modal @add-todo="addNewTodo"></new-todo-modal>
-  <todo-item
-    v-for="todo in todos"
-    :key="todo.id"
-    :id="todo.id"
-    :title="todo.title"
-    :description="todo.description"
-    :deadline="todo.deadline"
-    :repetition="todo.repetition"
-    :priority="todo.priority"
-    :is-done="false"
-    @toggle-isDone="toggleIsDoneStatus"
-    @delete="deleteTodo"
-  />
+  <ul>
+    <todo-item
+      v-for="todo in todos"
+      :key="todo.id"
+      :id="todo.id"
+      :title="todo.title"
+      :description="todo.description"
+      :deadline="todo.deadline"
+      :repetition="todo.repetition"
+      :priority="todo.priority"
+      :is-done="false"
+      @toggle-isDone="toggleIsDoneStatus"
+      @delete="deleteTodo"
+    ></todo-item>
+  </ul>
 </template>
 
 <script>
@@ -49,16 +51,19 @@ export default {
       clickedTodo.isDone = !clickedTodo.isDone;
     },
     addNewTodo(newTodoObj) {
+      console.log("hi from app");
+
       const newTodo = {
         id: new Date().toISOString(),
         title: newTodoObj.title,
         description: newTodoObj.description,
-        deadline: newTodoObj.deadline,
+        deadline: new Date(newTodoObj.deadline).toLocaleDateString(),
         repetition: newTodoObj.repetition,
         priority: newTodoObj.priority,
         isDone: false,
       };
       this.todos.push(newTodo);
+      console.log(this.todos);
     },
     deleteTodo(todoId) {
       this.todos = this.todos.filter((todo) => todo.id !== todoId);
@@ -100,18 +105,12 @@ header {
 }
 
 #app li {
+  justify-content: space-between;
   display: flex;
-  justify-content: space-around;
   direction: rtl;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  margin: 1rem auto;
-  border-radius: 10px;
-  text-align: center;
-  width: 95%;
-  max-width: 40rem;
 }
 
-#app h2 {
+h2 {
   font-size: 2rem;
   cursor: pointer;
   border-bottom: 4px solid #ccc;
@@ -136,7 +135,7 @@ header {
   max-width: 40rem;
 }
 
-#app button {
+button {
   font: inherit;
   cursor: pointer;
   padding: 0.5rem 1rem;
@@ -148,13 +147,13 @@ header {
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.26);
 }
 
-#app button:hover,
-#app button:active {
+button:hover,
+button:active {
   border: 1px solid #5e8deb;
   background: -webkit-linear-gradient(315deg, #42d392 25%, #647eff);
   background-clip: border-box;
-  color: white;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.26);
+  color: rgb(132, 6, 146);
+  box-shadow: 3px 3px 3px rgba(105, 1, 125, 0.26);
 }
 #app input {
   font: inherit;
@@ -171,21 +170,5 @@ header {
 }
 #app form div {
   margin: 1rem 0;
-}
-#app .priority {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-#app .priority-buttons {
-  display: flex;
-  flex-direction: column;
-}
-
-#app .times {
-  display: flex;
-  flex-direction: column;
-
-  justify-content: center;
 }
 </style>
