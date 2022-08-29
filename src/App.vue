@@ -1,44 +1,67 @@
 <template>
-  <h2 class="header">Done!</h2>
-  <new-todo-modal @add-todo="addNewTodo"></new-todo-modal>
-  <ul>
-    <todo-item
-      v-for="todo in todos"
-      :key="todo.id"
-      :id="todo.id"
-      :title="todo.title"
-      :description="todo.description"
-      :deadline="todo.deadline"
-      :repetition="todo.repetition"
-      :priority="todo.priority"
-      :is-done="false"
-      @toggle-isDone="toggleIsDoneStatus"
-      @delete="deleteTodo"
-    ></todo-item>
-  </ul>
+  <theHeader />
+  <AppLayout>
+    <main>
+      <new-todo-modal @add-todo="addNewTodo"></new-todo-modal>
+      <ul>
+        <todo-item
+          v-for="todo in todos"
+          :key="todo.id"
+          :id="todo.id"
+          :title="todo.title"
+          :description="todo.description"
+          :deadline="todo.deadline"
+          :repetition="todo.repetition"
+          :priority="todo.priority"
+          :is-done="false"
+          @toggle-isDone="toggleIsDoneStatus"
+          @delete="deleteTodo"
+        ></todo-item>
+      </ul>
+    </main>
+  </AppLayout>
 </template>
 
 <script>
+import TheHeader from "./components/layout/TheHeader.vue";
+import AppLayout from "./components/layout/appLayout.vue";
+import TodoItem from "./components/Todos/TodoItem.vue";
+import NewTodoModal from "./components/Todos/NewTodoModal.vue";
 export default {
+  components: {
+    TheHeader,
+    AppLayout,
+    TodoItem,
+    NewTodoModal,
+  },
   data() {
     return {
       todos: [
         {
           id: "1",
-          title: "Build an awesome 2Do app",
-          description: "dazzeling app that will get you a job",
+          title: "לבנות אפליקצייה מדהימה",
+          description: "אפליקציה מהממת שתשיג לי עבודה",
           deadline: new Date().toLocaleDateString(),
           repetition: "חזרה שבועית",
-          priority: "High",
+          priority: "high",
           isDone: false,
         },
         {
           id: "2",
-          title: "Get a job",
-          description: "finally get an amazing job",
+          title: "להעלות את האפליקציה לשרת",
+          description: "הירוקו/פיירבייס/ שרת אחר כלשהו",
           deadline: new Date().toLocaleDateString(),
           repetition: "חזרה שנתית",
-          priority: "High",
+          priority: "medium",
+          isDone: false,
+        },
+        {
+          id: "3",
+          title: "לטייל בכל העולם",
+          description: "אפשר להתחיל בחוצה אמריקה הצפונית",
+          deadline: new Date().toLocaleDateString(),
+          repetition: "חזרה שנתית",
+          priority: "low",
           isDone: false,
         },
       ],
@@ -77,7 +100,6 @@ export default {
 * {
   box-sizing: border-box;
 }
-
 html {
   font-family: "Jost", sans-serif;
 }
@@ -85,54 +107,20 @@ html {
 body {
   margin: 0;
 }
-
-header {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  margin: 3rem auto;
-  border-radius: 10px;
-  padding: 1rem;
-  background-color: #58004d;
-  color: white;
-  text-align: center;
-  width: 90%;
-  max-width: 40rem;
+main {
+  display: flex;
+  flex-direction: column;
+}
+#app {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
 }
 
 #app ul {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-#app li {
-  justify-content: space-between;
-  display: flex;
-  direction: rtl;
-}
-
-h2 {
-  font-size: 2rem;
-  cursor: pointer;
-  border-bottom: 4px solid #ccc;
-  background: -webkit-linear-gradient(315deg, #42d392 25%, #647eff);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin: 0 0 1rem 0;
-}
-
-#app form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  direction: rtl;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  margin: 1rem auto;
-  border-radius: 10px;
-  padding: 0.5rem;
-  text-align: center;
-  width: 90%;
-  max-width: 40rem;
 }
 
 button {
@@ -155,20 +143,6 @@ button:active {
   color: rgb(132, 6, 146);
   box-shadow: 3px 3px 3px rgba(105, 1, 125, 0.26);
 }
-#app input {
-  font: inherit;
-  padding: 0.15rem;
-}
-#app label {
-  font-weight: bold;
-  margin-right: 1rem;
-  width: 7rem;
-  display: inline-block;
-}
-#app textarea {
-  resize: none;
-}
-#app form div {
-  margin: 1rem 0;
-}
+
+
 </style>
