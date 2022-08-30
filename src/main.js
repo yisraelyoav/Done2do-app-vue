@@ -10,12 +10,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import BasicCard from "./components/UI/BasicCard.vue";
-
+import BasicButton from "./components/UI/BasicButton.vue";
+import AppList from "./components/UI/AppList.vue";
+import MainPage from "./pages/MainPage.vue";
 const app = createApp(App);
 
 library.add(faPencil, faTrash, faPlus, faClose);
 
 app.component("basic-card", BasicCard);
-
+app.component("main-page", MainPage);
+app.component("basic-button", BasicButton);
+app.component("app-list", AppList);
 app.component("font-awesome-icon", FontAwesomeIcon);
 app.mount("#app");

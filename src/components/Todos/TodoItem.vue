@@ -4,7 +4,7 @@
       <div class="times">
         <div>{{ deadline }}</div>
         <transition name="bounce">
-          <div v-if="detailsAreVisible">
+          <div v-show="detailsAreVisible">
             <p>{{ repetition }}</p>
           </div>
         </transition>
@@ -125,7 +125,7 @@ h2 {
   background-color: crimson;
 }
 .mediumPriority {
-  background-color: #647eff;
+  background-color: #e8c412;
 }
 .lowPriority {
   background-color: #42d392;
@@ -168,22 +168,5 @@ h2 {
   background: none;
   color: black;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.26);
-}
-.bounce-enter-active {
-  animation: bounce-in 0.5s;
-}
-.bounce-leave-active {
-  animation: bounce-in 0.3s reverse;
-}
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.25);
-  }
-  100% {
-    transform: scale(1);
-  }
 }
 </style>

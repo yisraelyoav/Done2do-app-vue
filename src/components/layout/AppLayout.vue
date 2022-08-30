@@ -8,6 +8,6 @@
 .layout {
   display: flex;
   flex-direction: column;
-  max-width: 95%;
+  align-items: center;
 }
 </style>

@@ -9,6 +9,7 @@ dialog {
   text-align: center;
   position: fixed;
   top: 30vh;
+  align-self: center;
   width: 25rem;
   border: none;
   border-radius: 10px;
