@@ -1,4 +1,13 @@
 <template>
+  <!-- <basic-dailog v-if="inputIsValid" title="קלט לא תקין">
+    <template #default>
+      <p>חובה להזין:כותרת,דדליין ורמת דחיפות</p>
+      <p>אנא הזן שדות אלו</p>
+    </template>
+    <template #actions>
+      <BasicButton @click="closeError">הבנתי</BasicButton>
+    </template>
+  </basic-dailog> -->
   <basic-card>
     <form @submit.prevent="submitData">
       <div class="addHeader">
@@ -89,13 +98,11 @@
     </form>
   </basic-card>
   <teleport to="body">
-    <Transition name="bounce">
-      <error-alert v-if="inputIsValid">
-        <h2>קלט לא תקין</h2>
-        <p>אנא הזן: כותרת,דדליין ורמת דחיפות</p>
-        <basic-button @click="closeError">הבנתי</basic-button>
-      </error-alert>
-    </Transition>
+    <error-alert v-if="inputIsValid" @close="closeError">
+      <h2>קלט לא תקין</h2>
+      <p>אנא הזן: כותרת,דדליין ורמת דחיפות</p>
+      <basic-button @click="closeError">הבנתי</basic-button>
+    </error-alert>
   </teleport>
 </template>
 
@@ -123,7 +130,7 @@ export default {
     },
     submitData() {
       if (
-        this.enterdTitle === "" ||
+        this.enterdTitle.trim() === "" ||
         this.enterdPriority === "" ||
         this.enterdDeadline === ""
       ) {

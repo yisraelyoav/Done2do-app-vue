@@ -26,7 +26,6 @@ export default {
     TodoItem,
   },
   inject: ["todos"],
-  data() {},
   methods: {
     addNewTodo(newTodoObj) {
       console.log("hi from app");
@@ -40,7 +39,7 @@ export default {
         priority: newTodoObj.priority,
         isDone: false,
       };
-      this.todos.push(newTodo);
+      this.todos.unshift(newTodo);
       console.log(this.todos);
     },
     toggleIsDoneStatus(todoId) {

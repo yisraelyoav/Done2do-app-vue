@@ -39,7 +39,8 @@ button:active {
 }
 .flat:hover,
 .flat:active {
-  background: rgba(255, 255, 255, 0.756);
+  background: rgb(138 157 252);
   background-clip: border-box;
+  color: white;
 }
 </style>
