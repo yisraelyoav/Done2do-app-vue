@@ -99,7 +99,7 @@
   </basic-card>
   <teleport to="body">
     <error-alert v-if="inputIsValid" @close="closeError">
-      <h2>קלט לא תקין</h2>
+      <h2>שדות חובה חסרים</h2>
       <p>אנא הזן: כותרת,דדליין ורמת דחיפות</p>
       <basic-button @click="closeError">הבנתי</basic-button>
     </error-alert>

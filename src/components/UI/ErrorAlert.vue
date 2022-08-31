@@ -27,6 +27,7 @@ dialog {
   top: 30vh;
   align-self: center;
   width: 25rem;
+  max-width: 80%;
   border: none;
   border-radius: 10px;
   background-color: white;
