@@ -31,7 +31,12 @@
               <font-awesome-icon icon="fa-solid fa-trash" />
             </button>
           </Transition>
-          <input class="doneCheckbox" type="checkbox" @change="toggleIsDone" />
+          <input
+            class="doneCheckbox"
+            type="checkbox"
+            name="completed"
+            @change="$emit('toggleComplete', id)"
+          />
           <Transition name="bounce">
             <button @click="$emit('edit', id)" v-if="detailsAreVisible">
               <font-awesome-icon icon="fa-solid fa-pencil" />
@@ -70,7 +75,12 @@ export default {
       type: String,
       required: true,
     },
-    isDone: {
+    completed: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    deleted: {
       type: Boolean,
       required: true,
       default: false,
@@ -86,13 +96,10 @@ export default {
       },
     };
   },
-  emits: ["toggle-isDone", "delete"],
+  emits: ["toggleComplete", "delete"],
   methods: {
     toggleDetails() {
       this.detailsAreVisible = !this.detailsAreVisible;
-    },
-    toggleIsDone() {
-      this.$emit("toggle-isDone", this.id);
     },
   },
 };
@@ -114,12 +121,14 @@ h2 {
   margin: 0 0 1rem 0;
 }
 .priority {
-  width: 4rem;
+  width: 8%;
+  min-width: 2rem;
   margin: 0 0.5rem 0 0;
   border-radius: 10px 0 0 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 .highPriority {
   background-color: crimson;

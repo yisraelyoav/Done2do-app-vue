@@ -2,7 +2,7 @@
   <the-header />
   <app-layout>
     <main>
-      <the-tabs class="tabs" />
+      <the-tabs class="tabs"> </the-tabs>
     </main>
   </app-layout>
 </template>
@@ -16,14 +16,6 @@ export default {
     TheHeader,
     AppLayout,
     TheTabs,
-  },
-  data() {
-    return {
-      checkedTodos: [],
-    };
-  },
-  computed: {},
-  methods: {
   },
 };
 </script>
@@ -43,8 +35,8 @@ body {
 main {
   display: flex;
   flex-direction: column;
-      width: fit-content;
-    max-width: 40rem;
+  width: fit-content;
+  margin: 1rem;
 }
 #app {
   display: flex;

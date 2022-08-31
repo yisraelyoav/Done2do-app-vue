@@ -1,8 +1,10 @@
 <template>
-  <div class="backDrop" @click="$emit('close')"></div>
-  <dialog open>
-    <slot> </slot>
-  </dialog>
+  <teleport to="body">
+    <div class="backDrop" @click="$emit('close')"></div>
+    <dialog open>
+      <slot> </slot>
+    </dialog>
+  </teleport>
 </template>
 <script>
 export default {

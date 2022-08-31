@@ -44,7 +44,7 @@
               id="Todotitle"
               maxlength="25"
               placeholder="חובה להזין כותרת"
-              v-model="enterdTitle"
+              v-model.trim="enterdTitle"
             />
           </div>
           <div>
@@ -130,7 +130,7 @@ export default {
     },
     submitData() {
       if (
-        this.enterdTitle.trim() === "" ||
+        this.enterdTitle === "" ||
         this.enterdPriority === "" ||
         this.enterdDeadline === ""
       ) {
