@@ -43,7 +43,8 @@ body {
 main {
   display: flex;
   flex-direction: column;
-  width: 40rem;
+      width: fit-content;
+    max-width: 40rem;
 }
 #app {
   display: flex;

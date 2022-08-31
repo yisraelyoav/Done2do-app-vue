@@ -10,6 +10,6 @@ div {
   margin: 1rem auto;
   border-radius: 10px;
   text-align: center;
-  width: 100%;
+  width: 90%;
 }
 </style>

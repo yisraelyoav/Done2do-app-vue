@@ -1,5 +1,5 @@
 <template>
-  <basic-card id="tabs">
+  <basic-card id="tabs" v-bind="$attrs">
     <basic-button @click="setSelectedTab('main-page')" :mode="mainPageBtnMode"
       >המשימות שלי</basic-button
     >

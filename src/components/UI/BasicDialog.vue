@@ -1,5 +1,5 @@
 <template>
-  <div class="backDrop" @click="$emit(close)"></div>
+  <div class="backDrop" @click="$emit('close')"></div>
   <dialog open>
     <header>
       <slot name="header">
