@@ -1,5 +1,7 @@
 <script setup>
+import EditTodo from "./EditTodo.vue";
 import { reactive } from "vue";
+const emit = defineEmits(["toggleComplete", "toggleDelete", "editTodo"]);
 const props = defineProps({
   id: {
     type: Number,
@@ -39,6 +41,7 @@ const props = defineProps({
 
 const state = reactive({
   detailsAreVisible: false,
+  editTodoFormVisible: false,
   priorityStatus: {
     High: props.priority === "high",
     Medium: props.priority === "medium",
@@ -51,6 +54,12 @@ const state = reactive({
 });
 const toggleDetails = () => {
   state.detailsAreVisible = !state.detailsAreVisible;
+};
+const toggleEditTodoForm = () => {
+  state.editTodoFormVisible = !state.editTodoFormVisible;
+};
+const editTodoFunc = (editTodoObj, id) => {
+  emit("editTodo", editTodoObj, id);
 };
 </script>
 
@@ -91,7 +100,7 @@ const toggleDetails = () => {
           <Transition name="bounce">
             <button
               v-if="state.detailsAreVisible"
-              @click="$emit('toggleDelete', id)"
+              @click="emit('toggleDelete', id)"
             >
               <font-awesome-icon
                 v-if="state.todoStatus.deleted"
@@ -104,11 +113,11 @@ const toggleDetails = () => {
             class="doneCheckbox"
             type="checkbox"
             name="isdone"
-            @change="$emit('toggleComplete', id)"
+            @change="emit('toggleComplete', id)"
             :checked="completed"
           />
           <Transition name="bounce">
-            <button @click="$emit('edit', id)" v-if="state.detailsAreVisible">
+            <button v-if="state.detailsAreVisible" @click="toggleEditTodoForm">
               <font-awesome-icon icon="fa-solid fa-pencil" />
             </button>
           </Transition>
@@ -116,6 +125,19 @@ const toggleDetails = () => {
       </div>
     </li>
   </basic-card>
+  <edit-todo
+    v-if="state.editTodoFormVisible"
+    :id="props.id"
+    :title="props.title"
+    :description="props.description"
+    :deadline="props.deadline"
+    :repetition="props.repetition"
+    :priority="props.priority"
+    completed
+    deleted
+    @close="toggleEditTodoForm"
+    @editTodo="editTodoFunc"
+  ></edit-todo>
 </template>
 
 <style scoped>

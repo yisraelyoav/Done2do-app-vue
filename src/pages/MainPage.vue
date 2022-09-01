@@ -15,6 +15,14 @@ const toggleDelete = (id) => {
   const clickedTodo = props.allTodos.find((todo) => todo.id === id);
   clickedTodo.deleted = !clickedTodo.deleted;
 };
+const editTodo = (editTodoObj, id) => {
+  const clickedTodo = props.allTodos.find((todo) => todo.id === id);
+  clickedTodo.title = editTodoObj.title;
+  clickedTodo.description = editTodoObj.description;
+  clickedTodo.deadline = new Date(editTodoObj.deadline).toLocaleDateString();
+  clickedTodo.repetition = editTodoObj.repetition;
+  clickedTodo.priority = editTodoObj.priority;
+};
 </script>
 <template>
   <span>
@@ -33,6 +41,7 @@ const toggleDelete = (id) => {
         :deleted="todo.deleted"
         @toggleComplete="toggleComplete"
         @toggleDelete="toggleDelete"
+        @editTodo="editTodo"
       ></todo-item>
     </app-list>
     <h2 class="headline">משימות שהושלמו</h2>
@@ -50,6 +59,7 @@ const toggleDelete = (id) => {
         :deleted="todo.deleted"
         @toggleComplete="toggleComplete"
         @toggleDelete="toggleDelete"
+        @editTodo="editTodo"
       ></todo-item>
     </app-list>
   </span>

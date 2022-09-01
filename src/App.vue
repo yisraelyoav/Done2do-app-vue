@@ -31,12 +31,12 @@ html {
 
 body {
   margin: 0;
-  direction: rtl;
 }
 main {
   display: flex;
   flex-direction: column;
   width: fit-content;
+  direction: rtl;
   margin: 1rem;
 }
 
@@ -52,6 +52,15 @@ main {
   color: #000000;
   margin: 0 0 1rem 0;
   text-align: center;
+}
+.backDrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 10;
 }
 
 .bounce-enter-active {

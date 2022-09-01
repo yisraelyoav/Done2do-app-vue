@@ -1,32 +1,100 @@
+<script setup>
+import { reactive } from "vue";
+import ErrorAlert from "../UI/ErrorAlert.vue";
+const emit = defineEmits(["editTodo", "close"]);
+const props = defineProps({
+  id: {
+    type: Number,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  deadline: {
+    type: String,
+    required: true,
+  },
+  repetition: {
+    type: String,
+    required: false,
+  },
+  priority: {
+    type: String,
+    required: true,
+  },
+  completed: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  deleted: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+});
+const state = reactive({
+  id: props.id,
+  enterdTitle: props.title,
+  enterdDescription: props.description,
+  enterdDeadline: props.deadline,
+  enterdRepetition: props.repetition,
+  enterdPriority: props.priority,
+  inputIsValid: false,
+});
+console.log(state);
+const submitData = () => {
+  if (
+    state.enterdTitle === "" ||
+    state.enterdPriority === "" ||
+    state.enterdDeadline === ""
+  ) {
+    state.inputIsValid = true;
+    return;
+  } else {
+    const editTodo = {
+      title: state.enterdTitle,
+      description: state.enterdDescription,
+      deadline: state.enterdDeadline,
+      repetition: state.enterdRepetition,
+      priority: state.enterdPriority,
+    };
+    emit("editTodo", editTodo, state.id);
+
+    (state.enterdTitle = ""),
+      (state.enterdDescription = ""),
+      (state.enterdDeadline = ""),
+      (state.enterdRepetition = ""),
+      (state.enterdPriority = "");
+    emit("close");
+  }
+};
+const closeError = () => {
+  state.inputIsValid = false;
+};
+</script>
+
 <template>
-  <basic-card>
-    <form @submit.prevent="submitData">
-      <div class="addHeader">
-        <Transition mode="out-in">
+  <div class="backDrop" @click="emit('close')"></div>
+  <Transition name="bounce">
+    <span class="editTodo">
+      <form @submit.prevent="submitData">
+        <div class="editHeader">
           <basic-button
             type="button"
-            v-if="toggleForm === false"
-            class="addNewTodoBtn"
-            @click="toggleNewTodoForm"
-          >
-            <font-awesome-icon icon="fa-solid fa-plus" />
-          </basic-button>
-          <basic-button
-            type="button"
-            v-else-if="toggleForm"
             class="addNewTodoBtn close"
-            @click="toggleNewTodoForm"
+            @click="emit('close')"
           >
             <font-awesome-icon icon="fa-solid fa-close" />
           </basic-button>
-        </Transition>
-        <h2 v-if="toggleForm === false" @click="toggleNewTodoForm">
-          צור משימה חדשה
-        </h2>
-        <h2 v-else-if="toggleForm">משימה חדשה</h2>
-      </div>
-      <Transition name="bounce">
-        <div class="formContent" v-show="toggleForm">
+          <h2>ערוך משימה</h2>
+        </div>
+        <div class="formContent">
           <div>
             <label for="Todotitle" class="required">כותרת</label>
             <input
@@ -35,7 +103,7 @@
               id="Todotitle"
               maxlength="25"
               placeholder="חובה להזין כותרת"
-              v-model.trim="enterdTitle"
+              v-model.trim="state.enterdTitle"
             />
           </div>
           <div>
@@ -46,7 +114,7 @@
               id="TodoDescription"
               maxlength="45"
               rows="3"
-              v-model="enterdDescription"
+              v-model="state.enterdDescription"
             />
           </div>
           <div>
@@ -55,7 +123,7 @@
               type="date"
               name="deadline"
               id="TodoDeadline"
-              v-model="enterdDeadline"
+              v-model="state.enterdDeadline"
             />
           </div>
           <div>
@@ -63,7 +131,7 @@
             <select
               name="repetition"
               id="TodoRepetition"
-              v-model="enterdRepetition"
+              v-model="state.enterdRepetition"
             >
               <option value="">ללא</option>
               <option value="חזרה יומית">יומית</option>
@@ -74,7 +142,11 @@
           </div>
           <div>
             <label for="TodoPriority" class="required">כמה זה דחוף?</label>
-            <select name="priority" id="TodoPriority" v-model="enterdPriority">
+            <select
+              name="priority"
+              id="TodoPriority"
+              v-model="state.enterdPriority"
+            >
               <option disabled value="">בחר רמת דחיפות</option>
               <option class="high" value="high">בהקדם האפשרי</option>
               <option class="medium" value="medium">צריך לעשות</option>
@@ -82,14 +154,14 @@
             </select>
           </div>
         </div>
-      </Transition>
-      <basic-button v-if="toggleForm" class="createTodoBtn" type="submit">
-        צור משימה חדשה
-      </basic-button>
-    </form>
-  </basic-card>
+        <basic-button class="createTodoBtn" type="submit">
+          שמור את השינויים
+        </basic-button>
+      </form>
+    </span>
+  </Transition>
   <teleport to="body">
-    <error-alert v-if="inputIsValid" @close="closeError">
+    <error-alert v-if="state.inputIsValid" @close="closeError">
       <h2>שדות חובה חסרים</h2>
       <p>אנא הזן: כותרת,דדליין ורמת דחיפות</p>
       <basic-button @click="closeError">הבנתי</basic-button>
@@ -97,65 +169,26 @@
   </teleport>
 </template>
 
-<script>
-import ErrorAlert from "../UI/ErrorAlert.vue";
-export default {
-  components: {
-    ErrorAlert,
-  },
-  data() {
-    return {
-      enterdTitle: "",
-      enterdDescription: "",
-      enterdDeadline: "",
-      enterdRepetition: "",
-      enterdPriority: "",
-      inputIsValid: false,
-      toggleForm: false,
-    };
-  },
-  emits: ["add-todo"],
-  methods: {
-    toggleNewTodoForm() {
-      this.toggleForm = !this.toggleForm;
-    },
-    submitData() {
-      if (
-        this.enterdTitle === "" ||
-        this.enterdPriority === "" ||
-        this.enterdDeadline === ""
-      ) {
-        this.inputIsValid = true;
-        return;
-      } else {
-        const newTodo = {
-          title: this.enterdTitle,
-          description: this.enterdDescription,
-          deadline: this.enterdDeadline,
-          repetition: this.enterdRepetition,
-          priority: this.enterdPriority,
-        };
-        this.$emit("add-todo", newTodo);
-        (this.enterdTitle = ""),
-          (this.enterdDescription = ""),
-          (this.enterdDeadline = ""),
-          (this.enterdRepetition = ""),
-          (this.enterdPriority = "");
-        this.toggleNewTodoForm();
-      }
-    },
-    closeError() {
-      this.inputIsValid = false;
-    },
-  },
-};
-</script>
-
 <style scoped>
-.addHeader {
+.editHeader {
   margin: 0;
   width: 100%;
   justify-content: flex-start;
+}
+
+.editTodo {
+  text-align: center;
+  position: fixed;
+  z-index: 100;
+  top: 30vh;
+  align-self: center;
+  width: 25rem;
+  max-width: 80%;
+  border: none;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 2px 8px rgb(0, 0, 0, 0.26);
+  padding: 1rem;
 }
 .addNewTodoBtn {
   width: fit-content;
