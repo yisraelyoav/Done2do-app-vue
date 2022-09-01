@@ -27,6 +27,7 @@ const editTodo = (editTodoObj, id) => {
 <template>
   <span>
     <h2 class="headline">משימות שצריך עוד לעשות</h2>
+    <h3 v-if="props.unDone.length === 0">אין לך משימות כרגע, רוצה להוסיף ?</h3>
     <app-list>
       <todo-item
         v-for="todo in props.unDone"
@@ -45,6 +46,9 @@ const editTodo = (editTodoObj, id) => {
       ></todo-item>
     </app-list>
     <h2 class="headline">משימות שהושלמו</h2>
+    <h3 v-if="props.completed.length === 0">
+      היום קצר והמלאכה מרובה, מה קורה???
+    </h3>
     <app-list>
       <todo-item
         v-for="todo in props.completed"

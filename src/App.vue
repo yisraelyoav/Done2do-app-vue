@@ -53,6 +53,12 @@ main {
   margin: 0 0 1rem 0;
   text-align: center;
 }
+h3 {
+  font-size: 1.2rem;
+  color: #000000;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
 .backDrop {
   position: fixed;
   top: 0;

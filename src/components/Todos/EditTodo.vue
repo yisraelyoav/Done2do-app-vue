@@ -47,7 +47,7 @@ const state = reactive({
   enterdPriority: props.priority,
   inputIsValid: false,
 });
-console.log(state);
+
 const submitData = () => {
   if (
     state.enterdTitle === "" ||

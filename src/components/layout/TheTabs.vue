@@ -1,8 +1,10 @@
 <script setup>
-import { reactive, computed } from "vue";
-import NewTodoForm from "../Todos/NewTodoForm.vue";
-import ArchivePage from "../../pages/ArchivePage.vue";
+import { reactive, computed, defineAsyncComponent } from "vue";
+// import ArchivePage from "../../pages/ArchivePage.vue";
 
+const ArchivePage = defineAsyncComponent(() =>
+  import("../../pages/ArchivePage.vue")
+);
 const state = reactive({
   todos: [
     {
