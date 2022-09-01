@@ -1,10 +1,61 @@
+<script setup>
+import { reactive } from "vue";
+const props = defineProps({
+  id: {
+    type: Number,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  deadline: {
+    type: String,
+    required: true,
+  },
+  repetition: {
+    type: String,
+    required: false,
+  },
+  priority: {
+    type: String,
+    required: true,
+  },
+  completed: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  deleted: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+});
+const state = reactive({
+  detailsAreVisible: false,
+  priorityStatus: {
+    High: props.priority === "high",
+    Medium: props.priority === "medium",
+    Low: props.priority === "low",
+  },
+});
+const toggleDetails = () => {
+  state.detailsAreVisible = !state.detailsAreVisible;
+};
+</script>
+
 <template>
   <basic-card>
     <li>
       <div class="times">
         <div>{{ deadline }}</div>
         <transition name="bounce">
-          <div v-show="detailsAreVisible">
+          <div v-show="state.detailsAreVisible">
             <p>{{ repetition }}</p>
           </div>
         </transition>
@@ -12,7 +63,7 @@
       <div>
         <h2 @click="toggleDetails">{{ title }}</h2>
         <transition name="bounce">
-          <div v-if="detailsAreVisible">
+          <div v-if="state.detailsAreVisible">
             <p>{{ description }}</p>
           </div>
         </transition>
@@ -20,25 +71,29 @@
       <div
         class="priority"
         :class="{
-          highPriority: priorityStatus.High,
-          mediumPriority: priorityStatus.Medium,
-          lowPriority: priorityStatus.Low,
+          highPriority: state.priorityStatus.High,
+          mediumPriority: state.priorityStatus.Medium,
+          lowPriority: state.priorityStatus.Low,
         }"
       >
         <div class="priority-buttons">
           <Transition name="bounce">
-            <button v-if="detailsAreVisible" @click="$emit('delete', id)">
+            <button
+              v-if="state.detailsAreVisible"
+              @click="$emit('toggleDelete', id)"
+            >
               <font-awesome-icon icon="fa-solid fa-trash" />
             </button>
           </Transition>
           <input
             class="doneCheckbox"
             type="checkbox"
-            name="completed"
+            name="isdone"
             @change="$emit('toggleComplete', id)"
+            :checked="completed"
           />
           <Transition name="bounce">
-            <button @click="$emit('edit', id)" v-if="detailsAreVisible">
+            <button @click="$emit('edit', id)" v-if="state.detailsAreVisible">
               <font-awesome-icon icon="fa-solid fa-pencil" />
             </button>
           </Transition>
@@ -48,44 +103,44 @@
   </basic-card>
 </template>
 
-<script>
+<!-- <script>
 export default {
-  props: {
-    id: {
-      type: String,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    deadline: {
-      type: String,
-      required: true,
-    },
-    repetition: {
-      type: String,
-      required: false,
-    },
-    priority: {
-      type: String,
-      required: true,
-    },
-    completed: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-    deleted: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-  },
+  // props: {
+  //   id: {
+  //     type: Number,
+  //     required: true,
+  //   },
+  //   title: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   description: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   deadline: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   repetition: {
+  //     type: String,
+  //     required: false,
+  //   },
+  //   priority: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   completed: {
+  //     type: Boolean,
+  //     required: true,
+  //     default: false,
+  //   },
+  //   deleted: {
+  //     type: Boolean,
+  //     required: true,
+  //     default: false,
+  //   },
+  // },
   data() {
     return {
       detailsAreVisible: false,
@@ -103,7 +158,7 @@ export default {
     },
   },
 };
-</script>
+</script> -->
 
 <style scoped>
 li {

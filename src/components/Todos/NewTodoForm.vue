@@ -1,41 +1,32 @@
 <template>
-  <!-- <basic-dailog v-if="inputIsValid" title="קלט לא תקין">
-    <template #default>
-      <p>חובה להזין:כותרת,דדליין ורמת דחיפות</p>
-      <p>אנא הזן שדות אלו</p>
-    </template>
-    <template #actions>
-      <BasicButton @click="closeError">הבנתי</BasicButton>
-    </template>
-  </basic-dailog> -->
   <basic-card>
     <form @submit.prevent="submitData">
       <div class="addHeader">
         <Transition mode="out-in">
           <basic-button
             type="button"
-            v-if="toggleModal === false"
+            v-if="toggleForm === false"
             class="addNewTodoBtn"
-            @click="toggleNewTodoModal"
+            @click="toggleNewTodoForm"
           >
             <font-awesome-icon icon="fa-solid fa-plus" />
           </basic-button>
           <basic-button
             type="button"
-            v-else-if="toggleModal"
+            v-else-if="toggleForm"
             class="addNewTodoBtn close"
-            @click="toggleNewTodoModal"
+            @click="toggleNewTodoForm"
           >
             <font-awesome-icon icon="fa-solid fa-close" />
           </basic-button>
         </Transition>
-        <h2 v-if="toggleModal === false" @click="toggleNewTodoModal">
+        <h2 v-if="toggleForm === false" @click="toggleNewTodoForm">
           צור משימה חדשה
         </h2>
-        <h2 v-else-if="toggleModal">משימה חדשה</h2>
+        <h2 v-else-if="toggleForm">משימה חדשה</h2>
       </div>
       <Transition name="bounce">
-        <div class="formContent" v-show="toggleModal">
+        <div class="formContent" v-show="toggleForm">
           <div>
             <label for="Todotitle" class="required">כותרת</label>
             <input
@@ -92,7 +83,7 @@
           </div>
         </div>
       </Transition>
-      <basic-button v-if="toggleModal" class="createTodoBtn" type="submit">
+      <basic-button v-if="toggleForm" class="createTodoBtn" type="submit">
         צור משימה חדשה
       </basic-button>
     </form>
@@ -120,13 +111,13 @@ export default {
       enterdRepetition: "",
       enterdPriority: "",
       inputIsValid: false,
-      toggleModal: false,
+      toggleForm: false,
     };
   },
   emits: ["add-todo"],
   methods: {
-    toggleNewTodoModal() {
-      this.toggleModal = !this.toggleModal;
+    toggleNewTodoForm() {
+      this.toggleForm = !this.toggleForm;
     },
     submitData() {
       if (
@@ -150,7 +141,7 @@ export default {
           (this.enterdDeadline = ""),
           (this.enterdRepetition = ""),
           (this.enterdPriority = "");
-        this.toggleNewTodoModal();
+        this.toggleNewTodoForm();
       }
     },
     closeError() {

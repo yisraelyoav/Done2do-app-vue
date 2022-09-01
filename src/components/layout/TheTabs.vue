@@ -1,22 +1,22 @@
 <script setup>
 import { reactive, computed } from "vue";
 import NewTodoForm from "../Todos/NewTodoForm.vue";
-import TodosArcive from "../Todos/TodosArcive.vue";
+import ArchivePage from "../../pages/ArchivePage.vue";
 
 const state = reactive({
   todos: [
     {
-      id: "1",
+      id: 1,
       title: "לבנות אפליקצייה מדהימה",
       description: "אפליקציה מהממת שתשיג לי עבודה",
       deadline: new Date().toLocaleDateString(),
       repetition: "חזרה שבועית",
       priority: "high",
-      completed: false,
+      completed: true,
       deleted: false,
     },
     {
-      id: "2",
+      id: 2,
       title: "להעלות את האפליקציה לשרת",
       description: "הירוקו/פיירבייס/ שרת אחר כלשהו",
       deadline: new Date().toLocaleDateString(),
@@ -26,7 +26,7 @@ const state = reactive({
       deleted: false,
     },
     {
-      id: "3",
+      id: 3,
       title: "לטייל בכל העולם",
       description: "אפשר להתחיל בחוצה אמריקה הצפונית",
       deadline: new Date().toLocaleDateString(),
@@ -40,13 +40,13 @@ const state = reactive({
 });
 
 const addTodo = (todoObj) => {
-  state.todos.push({
+  state.todos.unshift({
     id: state.todos.length + 1,
-    title: todoObj.enterdTitle,
-    description: todoObj.enterdDescription,
-    deadline: todoObj.enterdDeadline,
-    repetition: todoObj.enterdRepetition,
-    priority: todoObj.enterdPriority,
+    title: todoObj.title,
+    description: todoObj.description,
+    deadline: new Date(todoObj.deadline).toLocaleDateString(),
+    repetition: todoObj.repetition,
+    priority: todoObj.priority,
     completed: false,
     deleted: false,
   });
@@ -55,6 +55,10 @@ const addTodo = (todoObj) => {
 const setSelectedTab = (tab) => {
   state.selectedTab = tab;
 };
+
+const allTodos = computed(() => {
+  return state.todos;
+});
 
 const unDone = computed(() => {
   return state.todos.filter((todo) => !todo.completed && !todo.deleted);
@@ -71,8 +75,8 @@ const mainPageBtnMode = computed(() => {
   return state.selectedTab === "main-page" ? null : "flat";
 });
 
-const accompTodoBtnMode = computed(() => {
-  return state.selectedTab === "accomplished-todos" ? null : "flat";
+const archiveBtnMode = computed(() => {
+  return state.selectedTab === "archive" ? null : "flat";
 });
 </script>
 
@@ -81,19 +85,26 @@ const accompTodoBtnMode = computed(() => {
     <basic-button @click="setSelectedTab('main-page')" :mode="mainPageBtnMode"
       >המשימות שלי</basic-button
     >
-    <basic-button
-      @click="setSelectedTab('accomplished-todos')"
-      :mode="accompTodoBtnMode"
+    <basic-button @click="setSelectedTab('archive')" :mode="archiveBtnMode"
       >ארכיון</basic-button
     >
   </basic-card>
   <new-todo-form @add-todo="addTodo"></new-todo-form>
   <main-page
-    v-if="state.selectedTab"
+    v-if="state.selectedTab === 'main-page'"
+    :allTodos="allTodos"
     :unDone="unDone"
     :completed="completed"
+    :deleted="deleted"
   ></main-page>
-  <todos-arcive v-else :deleted="deleted"> </todos-arcive>
+  <archive-page
+    v-else
+    :deleted="deleted"
+    :allTodos="allTodos"
+    :unDone="unDone"
+    :completed="completed"
+  >
+  </archive-page>
 </template>
 
 <style>
