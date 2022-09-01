@@ -9,8 +9,8 @@ const state = reactive({
   todos: [
     {
       id: 1,
-      title: "לבנות אפליקצייה מדהימה",
-      description: "אפליקציה מהממת שתשיג לי עבודה",
+      title: "ללמוד vue ולבנות אפליקציה",
+      description: "אפליקציית ניהול משימות ",
       deadline: new Date().toLocaleDateString(),
       repetition: "חזרה שבועית",
       priority: "high",
@@ -20,7 +20,7 @@ const state = reactive({
     {
       id: 2,
       title: "להעלות את האפליקציה לשרת",
-      description: "הירוקו/פיירבייס/ שרת אחר כלשהו",
+      description: "הירוקו/פיירבייס/ נטליפיי",
       deadline: new Date().toLocaleDateString(),
       repetition: "חזרה שנתית",
       priority: "medium",

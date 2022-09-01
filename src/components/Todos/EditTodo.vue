@@ -180,7 +180,7 @@ const closeError = () => {
   text-align: center;
   position: fixed;
   z-index: 100;
-  top: 15vh;
+  top: 8vh;
   align-self: center;
   width: 25rem;
   max-width: 80%;
