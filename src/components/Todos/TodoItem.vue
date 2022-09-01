@@ -36,12 +36,17 @@ const props = defineProps({
     default: false,
   },
 });
+
 const state = reactive({
   detailsAreVisible: false,
   priorityStatus: {
     High: props.priority === "high",
     Medium: props.priority === "medium",
     Low: props.priority === "low",
+  },
+  todoStatus: {
+    completed: props.completed === true,
+    deleted: props.deleted === true,
   },
 });
 const toggleDetails = () => {
@@ -52,7 +57,13 @@ const toggleDetails = () => {
 <template>
   <basic-card>
     <li>
-      <div class="times">
+      <div
+        class="times"
+        :calss="{
+          completed: state.todoStatus.completed,
+          deleted: state.todoStatus.deleted,
+        }"
+      >
         <div>{{ deadline }}</div>
         <transition name="bounce">
           <div v-show="state.detailsAreVisible">
@@ -82,7 +93,11 @@ const toggleDetails = () => {
               v-if="state.detailsAreVisible"
               @click="$emit('toggleDelete', id)"
             >
-              <font-awesome-icon icon="fa-solid fa-trash" />
+              <font-awesome-icon
+                v-if="state.todoStatus.deleted"
+                icon="fa-solid fa-trash-restore"
+              />
+              <font-awesome-icon v-else icon="fa-solid fa-trash" />
             </button>
           </Transition>
           <input
@@ -102,63 +117,6 @@ const toggleDetails = () => {
     </li>
   </basic-card>
 </template>
-
-<!-- <script>
-export default {
-  // props: {
-  //   id: {
-  //     type: Number,
-  //     required: true,
-  //   },
-  //   title: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   description: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   deadline: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   repetition: {
-  //     type: String,
-  //     required: false,
-  //   },
-  //   priority: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   completed: {
-  //     type: Boolean,
-  //     required: true,
-  //     default: false,
-  //   },
-  //   deleted: {
-  //     type: Boolean,
-  //     required: true,
-  //     default: false,
-  //   },
-  // },
-  data() {
-    return {
-      detailsAreVisible: false,
-      priorityStatus: {
-        High: this.priority === "high",
-        Medium: this.priority === "medium",
-        Low: this.priority === "low",
-      },
-    };
-  },
-  emits: ["toggleComplete", "delete"],
-  methods: {
-    toggleDetails() {
-      this.detailsAreVisible = !this.detailsAreVisible;
-    },
-  },
-};
-</script> -->
 
 <style scoped>
 li {
@@ -193,6 +151,14 @@ h2 {
 }
 .lowPriority {
   background-color: #42d392;
+}
+.completed {
+  background-color: aqua;
+  color: #e8c412;
+}
+.deleted {
+  background-color: aqua;
+  color: #e8c412;
 }
 .doneCheckbox:checked {
   cursor: pointer;

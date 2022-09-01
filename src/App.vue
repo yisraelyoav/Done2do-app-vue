@@ -31,6 +31,7 @@ html {
 
 body {
   margin: 0;
+  direction: rtl;
 }
 main {
   display: flex;
@@ -38,6 +39,7 @@ main {
   width: fit-content;
   margin: 1rem;
 }
+
 #app {
   display: flex;
   flex-direction: column;
@@ -46,10 +48,10 @@ main {
 
 .headline {
   font-size: 2rem;
-  border-bottom: 5px solid #ccc;
-  color: #58004d;
+  border-bottom: 4px solid #ccc;
+  color: #000000;
   margin: 0 0 1rem 0;
-  align-self: center;
+  text-align: center;
 }
 
 .bounce-enter-active {

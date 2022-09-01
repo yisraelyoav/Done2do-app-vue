@@ -7,6 +7,7 @@ import {
   faTrash,
   faPlus,
   faClose,
+  faTrashRestore,
 } from "@fortawesome/free-solid-svg-icons";
 
 import BasicCard from "./components/UI/BasicCard.vue";
@@ -16,7 +17,7 @@ import AppList from "./components/UI/AppList.vue";
 import MainPage from "./pages/MainPage.vue";
 const app = createApp(App);
 
-library.add(faPencil, faTrash, faPlus, faClose);
+library.add(faPencil, faTrash, faPlus, faClose, faTrashRestore);
 
 app.component("basic-card", BasicCard);
 app.component("main-page", MainPage);
