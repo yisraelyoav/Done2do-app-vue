@@ -16,7 +16,7 @@ const props = defineProps({
     required: true,
   },
   deadline: {
-    type: String,
+    type: Date,
     required: true,
   },
   repetition: {
@@ -42,7 +42,7 @@ const state = reactive({
   id: props.id,
   enterdTitle: props.title,
   enterdDescription: props.description,
-  enterdDeadline: props.deadline,
+  enterdDeadline: props.deadline.toISOString().split("T")[0],
   enterdRepetition: props.repetition,
   enterdPriority: props.priority,
   inputIsValid: false,

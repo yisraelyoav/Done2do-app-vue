@@ -51,12 +51,8 @@
           </div>
           <div>
             <label for="TodoDeadline" class="required">מה הדדליין?</label>
-            <input
-              type="date"
-              name="deadline"
-              id="TodoDeadline"
-              v-model="enterdDeadline"
-            />
+            <input type="date" name="deadline" id="TodoDeadline"
+            v-model="enterdDeadline" min= />
           </div>
           <div>
             <label for="TodoRepetition">חזרה</label>

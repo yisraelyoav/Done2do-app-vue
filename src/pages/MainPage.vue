@@ -19,7 +19,7 @@ const editTodo = (editTodoObj, id) => {
   const clickedTodo = props.allTodos.find((todo) => todo.id === id);
   clickedTodo.title = editTodoObj.title;
   clickedTodo.description = editTodoObj.description;
-  clickedTodo.deadline = new Date(editTodoObj.deadline).toLocaleDateString();
+  clickedTodo.deadline = new Date(editTodoObj.deadline);
   clickedTodo.repetition = editTodoObj.repetition;
   clickedTodo.priority = editTodoObj.priority;
 };

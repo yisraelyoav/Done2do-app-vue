@@ -16,7 +16,7 @@ const props = defineProps({
     required: true,
   },
   deadline: {
-    type: String,
+    type: Date,
     required: true,
   },
   repetition: {
@@ -73,7 +73,7 @@ const editTodoFunc = (editTodoObj, id) => {
           deleted: state.todoStatus.deleted,
         }"
       >
-        <div>{{ deadline }}</div>
+        <div>{{ deadline.toLocaleDateString() }}</div>
         <transition name="bounce">
           <div v-show="state.detailsAreVisible">
             <p>{{ repetition }}</p>
